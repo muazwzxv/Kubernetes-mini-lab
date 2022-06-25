@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-query-deployment
+spec:
+  replicas: 1
+
+  # Section that defines the app lable
+  # as key value store ['app' : demo-posts]
+  selector:
+    matchLabels:
+      app: demo-query
+
+  # This parts defines that the deployment should create pods
+  # for label ['app': demo-posts]
+  template:
+    metadata:
+      labels:
+        app: demo-query
+    spec: 
+      containers:
+        - name: demo-query
+          image: muazwazir1/query-demo:latest
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: query-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: demo-query
+  ports:
+    - name: demo-query
+      protocol: TCP
+      port: 4003
+      targetPort: 4003

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-comments-deployment
+spec:
+  replicas: 1
+
+  # Section that defines the app lable
+  # as key value store ['app' : demo-posts]
+  selector:
+    matchLabels:
+      app: demo-comments
+
+  # This parts defines that the deployment should create pods
+  # for label ['app': demo-posts]
+  template:
+    metadata:
+      labels:
+        app: demo-comments
+    spec: 
+      containers:
+        - name: demo-comments
+          image: muazwazir1/comments-demo:latest
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: comments-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: demo-comments
+  ports:
+    - name: demo-comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001

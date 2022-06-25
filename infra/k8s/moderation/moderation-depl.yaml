@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-moderation-deployment
+spec:
+  replicas: 1
+
+  # Section that defines the app lable
+  # as key value store ['app' : demo-posts]
+  selector:
+    matchLabels:
+      app: demo-moderation
+
+  # This parts defines that the deployment should create pods
+  # for label ['app': demo-posts]
+  template:
+    metadata:
+      labels:
+        app: demo-moderation
+    spec: 
+      containers:
+        - name: demo-moderation
+          image: muazwazir1/moderation-demo:latest
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: moderation-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: demo-moderation
+  ports:
+    - name: demo-moderation
+      protocol: TCP
+      port: 4003
+      targetPort: 4003

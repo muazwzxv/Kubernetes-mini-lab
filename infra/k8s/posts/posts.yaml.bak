@@ -1,0 +1,14 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: posts-pod
+spec:
+  containers:
+    - name: posts-demo
+
+      # If we do not specify *:<version> for image, 
+      # k8s will look for the image in the dockerhub
+      # and use the :latest tag of the image
+      image: muazwazir1/posts-demo:0.0.1
+      imagePullPolicy: Never

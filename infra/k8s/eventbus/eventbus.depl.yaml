@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-eventbus-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-eventbus
+  template:
+    metadata:
+      labels:
+        app: demo-eventbus
+    spec: 
+      containers:
+        - name: demo-eventbus
+          image: muazwazir1/eventbus-demo:latest

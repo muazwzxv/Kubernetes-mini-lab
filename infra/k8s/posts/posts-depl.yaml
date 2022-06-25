@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-posts-deployment
+spec:
+  replicas: 1
+
+  # Section that defines the app lable
+  # as key value store ['app' : demo-posts]
+  selector:
+    matchLabels:
+      app: demo-posts
+
+  # This parts defines that the deployment should create pods
+  # for label ['app': demo-posts]
+  template:
+    metadata:
+      labels:
+        app: demo-posts
+    spec: 
+      containers:
+        - name: demo-posts
+          image: muazwazir1/posts-demo:latest

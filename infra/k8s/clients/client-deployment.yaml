@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-query-deployment
+  name: demo-client-deployment
 spec:
   replicas: 1
 
@@ -9,31 +9,31 @@ spec:
   # as key value store ['app' : demo-posts]
   selector:
     matchLabels:
-      app: demo-query
+      app: demo-client
 
   # This parts defines that the deployment should create pods
   # for label ['app': demo-posts]
   template:
     metadata:
       labels:
-        app: demo-query
+        app: demo-client
     spec: 
       containers:
-        - name: demo-query
-          image: muazwazir1/query-demo:latest
+        - name: demo-client
+          image: muazwazir1/client-demo:latest
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata: 
-  name: query-clusterip-service
+  name: client-clusterip-service
 spec:
   type: ClusterIP
   selector:
-    app: demo-query
+    app: demo-client
   ports:
-    - name: demo-query
+    - name: demo-client
       protocol: TCP
-      port: 4002
-      targetPort: 4002
+      port: 3000
+      targetPort: 3000
